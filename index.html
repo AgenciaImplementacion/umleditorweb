@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Rappid Demo Application</title>
+  <link rel="stylesheet" type="text/css" href="lib/rappid/css/rappid.css">
+  <link rel="stylesheet" type="text/css" href="app/css/style.css">
+  <link rel="stylesheet" type="text/css" href="app/css/theme-picker.css">
+  <link rel="icon" href="app/img/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="app-header">
+      <div class="app-title">
+        <h1>Rappid</h1>
+      </div>
+      <div class="toolbar-container"></div>
+    </div>
+    <div class="app-body">
+      <div class="stencil-container"></div>
+      <div class="paper-container"></div>
+      <div class="inspector-container"></div>
+      <div class="navigator-container"></div>
+    </div>
+  </div>
+
+  <!-- Rappid/JointJS dependencies: -->
+  <script src="lib/jquery/js/jquery.js"></script>
+  <script src="lib/lodash/js/index.js"></script>
+  <script src="lib/backbone/js/backbone.js"></script>
+  <script src="lib/graphlib/js/graphlib.core.js"></script>
+  <script src="lib/dagre/js/dagre.core.js"></script>
+
+  <script src="lib/rappid/js/rappid.js"></script>
+
+  <!--[if IE 9]>
+        <script>
+          // `-ms-user-select: none` doesn't work in IE9
+          document.onselectstart = function() { return false; };
+        </script>
+    <![endif]-->
+
+  <!-- Application files:  -->
+  <script src="app/js/config/halo.js"></script>
+  <script src="app/js/config/selection.js"></script>
+  <script src="app/js/config/inspector.js"></script>
+  <script src="app/js/config/stencil.js"></script>
+  <script src="app/js/config/toolbar.js"></script>
+  <script src="app/js/config/sample-graphs.js"></script>
+  <script src="app/js/views/main.js"></script>
+  <script src="app/js/views/theme-picker.js"></script>
+  <script src="app/js/models/joint.shapes.app.js"></script>
+  <script>
+    joint.setTheme('modern');
+    app = new App.MainView({
+      el: '#app'
+    });
+    themePicker = new App.ThemePicker({
+      mainView: app
+    });
+    themePicker.render().$el.appendTo(document.body);
+    app.graph.fromJSON(JSON.parse(App.config.sampleGraphs.emergencyProcedure));
+  </script>
+
+  <!-- Local file warning: -->
+  <div id="message-fs" style="display: none;">
+    <p>The application was open locally using the file protocol. It is recommended to access it trough a <b>Web server</b>.</p>
+    <p>Please see <a href="README.md">instructions</a>.</p>
+  </div>
+  <script>
+    (function() {
+      var fs = (document.location.protocol === 'file:');
+      var ff = (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1);
+      if (fs && !ff) {
+        (new joint.ui.Dialog({
+          width: 300,
+          type: 'alert',
+          title: 'Local File',
+          content: $('#message-fs').show()
+        })).open();
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
