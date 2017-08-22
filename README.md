@@ -1,6 +1,8 @@
 # umleditorweb
 Web (and desktop?) interface of umleditor. Based on https://resources.jointjs.com/demos/rappid/apps/KitchenSink/index.html
 
+![Interface](./wiki/images/screenshot1.png)
+
 # Rappid Demo Application
 
 This application showcases the Rappid plugins in action and shows how the plugins
